@@ -3,10 +3,7 @@ package com.salesianos.triana.proyecto.Restaurantelar.model;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -24,7 +21,12 @@ public class Reservation {
 
     private LocalDateTime date;
 
+    @OneToOne
     private Pedido pedido;
 
+    @ManyToOne
     private UserEntity client;
+
+    @ManyToOne
+    private RestaurantTable table;
 }

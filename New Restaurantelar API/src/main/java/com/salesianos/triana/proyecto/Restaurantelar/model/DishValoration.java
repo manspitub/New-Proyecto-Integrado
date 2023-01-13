@@ -1,10 +1,10 @@
 package com.salesianos.triana.proyecto.Restaurantelar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 
 @Entity
@@ -15,11 +15,15 @@ import javax.validation.constraints.Max;
 @NoArgsConstructor
 public class DishValoration {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private Plato plato;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
     @Max(5)

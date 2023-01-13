@@ -3,10 +3,7 @@ package com.salesianos.triana.proyecto.Restaurantelar.model;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,10 +18,13 @@ public class Worker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
     private UserEntity user;
+
+    private String code;
+
     private String name;
     private boolean offWork;
-    @Builder.Default
-    private LocalDateTime timeWorking = LocalDateTime.now();
+    private LocalDateTime timeWorking;
 
 }

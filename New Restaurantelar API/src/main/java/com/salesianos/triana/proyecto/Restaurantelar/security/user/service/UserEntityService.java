@@ -1,10 +1,14 @@
 package com.salesianos.triana.proyecto.Restaurantelar.security.user.service;
 
+import com.salesianos.triana.proyecto.Restaurantelar.model.Worker;
+import com.salesianos.triana.proyecto.Restaurantelar.repositories.WorkerRepository;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.dto.CreateUserClientDto;
+import com.salesianos.triana.proyecto.Restaurantelar.security.user.dto.CreateUserWorkerDto;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.repository.UserEntityRepository;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.role.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +22,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserEntityService implements UserDetailsService {
 
+    @Autowired
     private final UserEntityRepository repository;
+
+    private final WorkerRepository workerRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -47,6 +54,29 @@ public class UserEntityService implements UserDetailsService {
         return repository.save(user);
 
     } // excepcion si existe usuario
+
+    public Worker saveWorker(CreateUserWorkerDto newUser, UserRole role){
+
+        UserEntity user = UserEntity.builder()
+                .avatar(newUser.getAvatar())
+                .email(newUser.getEmail())
+                .username(newUser.getUsername())
+                .fullName(newUser.getFullName())
+                .role(role)
+                .build();
+
+        Worker worker = Worker.builder()
+                .code(passwordEncoder.encode(newUser.getCode()))
+                .user(user)
+                .timeWorking(newUser.getTimeWorking())
+                .offWork(newUser.isOffWork())
+                .build();
+
+        return workerRepository.save(worker);
+
+    } //excepcion si el ya hay un worker con el mismo código registrado
+
+
 
     public Optional<UserEntity> findById(UUID id) {
         return repository.findById(id);

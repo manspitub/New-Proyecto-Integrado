@@ -3,10 +3,7 @@ package com.salesianos.triana.proyecto.Restaurantelar.model;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +17,9 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private UserEntity client;
 
     private LocalDateTime date;
@@ -30,7 +30,8 @@ public class Pedido {
     private boolean completed;
     private boolean cancelled;
 
-    private UserEntity deliveryMan;
+    @OneToOne
+    private Worker deliveryMan;
 
 
 

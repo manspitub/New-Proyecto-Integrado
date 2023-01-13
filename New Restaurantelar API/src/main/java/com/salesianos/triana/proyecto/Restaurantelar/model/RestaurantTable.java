@@ -3,8 +3,7 @@ package com.salesianos.triana.proyecto.Restaurantelar.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -12,10 +11,14 @@ import javax.persistence.Lob;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Table {
+public class RestaurantTable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long numberId;
+
+    private String avatar;
 
 }

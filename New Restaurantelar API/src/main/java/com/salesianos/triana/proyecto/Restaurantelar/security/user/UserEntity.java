@@ -56,8 +56,6 @@ public class UserEntity implements UserDetails, Serializable {
 
     private String password;
 
-    private int code;
-
     private String avatar;
 
     private double points;
@@ -85,7 +83,7 @@ public class UserEntity implements UserDetails, Serializable {
     @OneToMany(mappedBy = "payer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Payment> payments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "critic", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<DishValoration> valorations = new ArrayList<>();
 

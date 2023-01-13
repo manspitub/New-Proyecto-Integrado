@@ -10,14 +10,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class WorkerDto {
 
     private UUID id;
     private String username, avatar, email, role, fullName;
-    private double points;
-    private boolean verified;
     private boolean offWork;
     private LocalDateTime timeWorking;
-
-
 }

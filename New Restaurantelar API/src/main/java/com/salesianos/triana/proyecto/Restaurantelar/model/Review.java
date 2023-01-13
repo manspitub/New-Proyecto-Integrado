@@ -4,6 +4,8 @@ import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,5 +24,8 @@ public class Review {
 
     @Lob
     String message;
+
+    @ManyToOne
+    Topic topic;
 
 }
