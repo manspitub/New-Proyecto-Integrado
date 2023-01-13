@@ -65,6 +65,8 @@ public class UserEntityService implements UserDetailsService {
                 .role(role)
                 .build();
 
+        repository.save(user);
+
         Worker worker = Worker.builder()
                 .code(passwordEncoder.encode(newUser.getCode()))
                 .user(user)

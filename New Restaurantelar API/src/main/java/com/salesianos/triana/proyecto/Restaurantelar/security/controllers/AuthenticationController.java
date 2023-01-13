@@ -1,13 +1,21 @@
 package com.salesianos.triana.proyecto.Restaurantelar.security.controllers;
 
 import com.salesianos.triana.proyecto.Restaurantelar.model.Worker;
+import com.salesianos.triana.proyecto.Restaurantelar.security.jwt.JwtProvider;
+import com.salesianos.triana.proyecto.Restaurantelar.security.jwt.JwtUserClientReponse;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
+import com.salesianos.triana.proyecto.Restaurantelar.security.user.auth.LoginDtoUser;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.dto.*;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.role.UserRole;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
     private  final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
 
@@ -28,12 +38,52 @@ public class AuthenticationController {
     }
 
     @PostMapping("/worker")
-    public ResponseEntity<WorkerDto> signUpWorker(@RequestBody CreateUserWorkerDto newWorker){
+    public ResponseEntity<WorkerDto> signUpWorker(@RequestBody CreateUserWorkerDto newWorker, @AuthenticationPrincipal UserEntity user){
 
         Worker workerRegistered = userEntityService.saveWorker(newWorker, UserRole.WORKER);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.convertWorkerToWorkerDto(workerRegistered));
     }
+
+    @PostMapping("login/client")
+    public ResponseEntity<?> loginUser(@RequestBody LoginDtoUser loginDtoUser){
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                loginDtoUser.getEmailOrUsername(),
+                                loginDtoUser.getPassword()
+                        )
+                );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateToken(authentication);
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(convertUserClientToJwtUserResponse(user, jwt));
+    }
+
+    private JwtUserClientReponse convertUserClientToJwtUserResponse(UserEntity user, String jwt){
+        return JwtUserClientReponse.builder()
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .avatar(user.getAvatar())
+                .email(user.getEmail())
+                .points(user.getPoints())
+                .verified(user.isVerified())
+                .role(user.getRole().name())
+                .token(jwt)
+                .build();
+    }
+
+
+
+
+
+
+
+
 
 
 

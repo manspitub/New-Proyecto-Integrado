@@ -1,20 +1,18 @@
-package com.salesianos.triana.proyecto.Restaurantelar.security.user.dto;
+package com.salesianos.triana.proyecto.Restaurantelar.security.jwt;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+@Builder
+public class JwtUserClientReponse {
 
-    private UUID id;
     private String username, avatar, email, role, fullName;
     private double points;
     private boolean verified;
-
+    private String token;
 }
