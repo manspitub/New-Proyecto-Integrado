@@ -54,6 +54,8 @@ public class UserEntity implements UserDetails, Serializable {
 
     private String fullName;
 
+    private String address;
+
     private String password;
 
     private String avatar;
@@ -86,6 +88,9 @@ public class UserEntity implements UserDetails, Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<DishValoration> valorations = new ArrayList<>();
+
+    @OneToOne(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Wage salary;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;

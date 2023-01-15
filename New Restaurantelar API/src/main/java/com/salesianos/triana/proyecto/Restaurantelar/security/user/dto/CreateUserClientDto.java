@@ -25,6 +25,8 @@ public class CreateUserClientDto {
     @NotEmpty
     private String email;
 
+    private String address;
+
     @Builder.Default
     private String avatar = ""; //Se pone una imagen por defecto para los usuarios que no elijan imagen
 

@@ -19,6 +19,7 @@ public class UserDtoConverter {
                 .email(user.getEmail())
                 .points(user.getPoints())
                 .verified(user.isVerified())
+                .address(user.getAddress())
                 .build();
     }
 

@@ -16,5 +16,6 @@ public class UserDto {
     private String username, avatar, email, role, fullName;
     private double points;
     private boolean verified;
+    private String address;
 
 }

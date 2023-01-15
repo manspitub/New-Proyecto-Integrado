@@ -13,6 +13,7 @@ import com.salesianos.triana.proyecto.Restaurantelar.security.user.service.UserE
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,6 +42,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.convertUserEntityToUserClientDto(userRegistered));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/worker")
     public ResponseEntity<WorkerDto> signUpWorker(@RequestBody CreateUserWorkerDto newWorker, @AuthenticationPrincipal UserEntity user){
 
@@ -48,6 +50,16 @@ public class AuthenticationController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.convertWorkerToWorkerDto(workerRegistered));
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/admin")
+    public ResponseEntity<WorkerDto> signUpADMIN(@RequestBody CreateUserWorkerDto newWorker, @AuthenticationPrincipal UserEntity user){
+
+        Worker workerRegistered = userEntityService.saveWorker(newWorker, UserRole.ADMIN);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.convertWorkerToWorkerDto(workerRegistered));
+    }
+
 
     @PostMapping("login/client")
     public ResponseEntity<?> loginUser(@RequestBody LoginDtoUser loginDtoUser){
@@ -114,6 +126,50 @@ public class AuthenticationController {
                 .token(jwt)
                 .build();
     }
+
+    @PostMapping("login/admin")
+    public ResponseEntity<?> loginADMIN(@RequestBody LoginDtoWorker loginDtoWorker){
+
+        if (userEntityService.findWorkerByCode(loginDtoWorker.getCode()).getRole().equals(UserRole.ADMIN)){
+            Authentication authentication =
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    userEntityService.findWorkerByCode(loginDtoWorker.getCode()),
+                                    loginDtoWorker.getCode()
+                            )
+                    );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtProvider.generateToken(authentication);
+            UserEntity user = (UserEntity) authentication.getPrincipal();
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(convertUserWorkerToJwtUserWorkerResponse(user, jwt));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+
+    }
+
+
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal UserEntity user) {
+
+        if (user.getRole().equals(UserRole.USER)){
+            return ResponseEntity.status(HttpStatus.OK).body(userDtoConverter.convertUserEntityToUserClientDto(user));
+        }
+
+        if (user.getRole().equals(UserRole.WORKER) || user.getRole().equals(UserRole.ADMIN)){
+            return ResponseEntity.status(HttpStatus.OK).body(userDtoConverter.convertWorkerToWorkerDto(user.getWorker()));
+        }
+
+        return ResponseEntity.ok().build();
+
+    }
+
+
 
 
 

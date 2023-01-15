@@ -48,6 +48,7 @@ public class UserEntityService implements UserDetailsService {
                 .points(100)
                 .username(newUser.getUsername())
                 .fullName(newUser.getFullName())
+                .address(newUser.getAddress())
                 .role(role)
                 .build();
 
