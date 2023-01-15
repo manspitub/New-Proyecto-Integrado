@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginDtoWorker {
 
-    public int code;
+    public String code;
 
 }

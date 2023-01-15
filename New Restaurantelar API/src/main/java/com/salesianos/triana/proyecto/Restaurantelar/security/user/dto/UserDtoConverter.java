@@ -32,6 +32,7 @@ public class UserDtoConverter {
                 .role(worker.getUser().getRole().name())
                 .offWork(worker.isOffWork())
                 .timeWorking(worker.getTimeWorking())
+                .code(worker.getCode())
                 .build();
     }
 

@@ -62,13 +62,14 @@ public class UserEntityService implements UserDetailsService {
                 .email(newUser.getEmail())
                 .username(newUser.getUsername())
                 .fullName(newUser.getFullName())
+                .password(passwordEncoder.encode(newUser.getCode()))
                 .role(role)
                 .build();
 
         repository.save(user);
 
         Worker worker = Worker.builder()
-                .code(passwordEncoder.encode(newUser.getCode()))
+                .code(newUser.getCode())
                 .user(user)
                 .timeWorking(newUser.getTimeWorking())
                 .offWork(newUser.isOffWork())
@@ -80,8 +81,16 @@ public class UserEntityService implements UserDetailsService {
 
 
 
+
+
     public Optional<UserEntity> findById(UUID id) {
         return repository.findById(id);
+    }
+
+    public UserEntity findWorkerByCode(String code){
+        Worker workerFind = workerRepository.findByCode(code);
+
+        return workerFind.getUser();
     }
 
 }

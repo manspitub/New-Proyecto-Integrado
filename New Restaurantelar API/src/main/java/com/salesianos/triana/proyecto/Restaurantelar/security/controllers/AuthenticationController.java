@@ -3,8 +3,10 @@ package com.salesianos.triana.proyecto.Restaurantelar.security.controllers;
 import com.salesianos.triana.proyecto.Restaurantelar.model.Worker;
 import com.salesianos.triana.proyecto.Restaurantelar.security.jwt.JwtProvider;
 import com.salesianos.triana.proyecto.Restaurantelar.security.jwt.JwtUserClientReponse;
+import com.salesianos.triana.proyecto.Restaurantelar.security.jwt.JwtUserWorkerResponse;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.auth.LoginDtoUser;
+import com.salesianos.triana.proyecto.Restaurantelar.security.user.auth.LoginDtoWorker;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.dto.*;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.role.UserRole;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.service.UserEntityService;
@@ -18,6 +20,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,7 +30,7 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private  final UserEntityService userEntityService;
+    private final UserEntityService userEntityService;
     private final UserDtoConverter userDtoConverter;
 
     @PostMapping("/client")
@@ -76,6 +80,46 @@ public class AuthenticationController {
                 .token(jwt)
                 .build();
     }
+
+    @PostMapping("login/worker")
+    public ResponseEntity<?> loginWorker(@RequestBody LoginDtoWorker loginDtoWorker){
+
+
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                userEntityService.findWorkerByCode(loginDtoWorker.getCode()),
+                                loginDtoWorker.getCode()
+                        )
+                );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateToken(authentication);
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(convertUserWorkerToJwtUserWorkerResponse(user, jwt));
+    }
+
+    private JwtUserWorkerResponse convertUserWorkerToJwtUserWorkerResponse(UserEntity user, String jwt){
+        return JwtUserWorkerResponse.builder()
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .avatar(user.getAvatar())
+                .email(user.getEmail())
+                .role(user.getRole().name())
+                .offWork(user.getWorker().isOffWork())
+                .timeWorking(LocalDateTime.now()) //Señala la fecha y hora en la que comenzó a trabajar
+                .token(jwt)
+                .build();
+    }
+
+
+
+
+
+
 
 
 
