@@ -15,7 +15,7 @@ public class CreatePedidoDto {
 
     private String fullNameClient;
     private int type;
-    private String usernameWaiter;
+    private Long idWaiter;
     private List<Long> idsPlato;
     private int typePayment;
     private LocalDateTime dateReservation;

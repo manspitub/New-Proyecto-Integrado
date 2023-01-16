@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface WorkerRepository extends JpaRepository<Worker, UUID> {
+public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
     Worker findByCode(String code);
 

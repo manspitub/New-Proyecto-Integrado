@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
@@ -17,5 +19,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
             """, nativeQuery = true)
     Page<Pedido> findAllInProgress(Pageable pageable);
 
-    Page<Pedido> findByClient_Id(Long id);
+    Page<Pedido> findByClient_Id(UUID id);
 }

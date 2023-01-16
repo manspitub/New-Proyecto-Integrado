@@ -35,6 +35,8 @@ public class Pedido {
 
     @OneToOne
     private Worker deliveryMan;
+    private int numTable;
+    private double totalAmount;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE) //Al traernos un pedido nos traeremos a su vez la asociación pedidoPlato
@@ -44,7 +46,16 @@ public class Pedido {
     private Reservation reservation;
 
 
+    public List<String> namePlatosPedido(){
+        List<String> platosPedidos= new ArrayList<>();
 
+
+        for (PedidoPlato pedidoPlato: this.pedidoPlatos){
+            platosPedidos.add("Nombres Platos: "+pedidoPlato.getPlato().getName());
+            platosPedidos.add("Ids Platos: "+pedidoPlato.getPlato().getId());
+        }
+        return platosPedidos;
+    }
 
 
 

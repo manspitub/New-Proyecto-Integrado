@@ -28,6 +28,8 @@ public class PedidoPlato {
 
     private int sum; // Esta variable nos servirá para tener el conteo de los platos más vendidos
 
-
-
+    public PedidoPlato(Plato plato, int sum) {
+        this.plato = plato;
+        this.sum = sum;
+    }
 }
