@@ -1,11 +1,12 @@
 package com.salesianos.triana.proyecto.Restaurantelar.model;
 
-import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+/**
+ * Clase de asociación entre pedido y plato
+ */
 
 @Entity
 @Getter
@@ -13,19 +14,20 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reservation {
+public class PedidoPlato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
-
-    @OneToOne
+    @ManyToOne
     private Pedido pedido;
 
     @ManyToOne
-    private UserEntity client;
+    private Plato plato;
 
-    private int numMesa;
+    private int sum; // Esta variable nos servirá para tener el conteo de los platos más vendidos
+
+
+
 }

@@ -55,8 +55,8 @@ public class PlatoController {
 
     @PreAuthorize("hasAnyRole('ROLE_WORKER','ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<PlatoDto> updatePlato(@RequestBody CreatePlatoDto platoDto, @PathVariable Long id){
-        Plato plato = platoService.edit(platoDto, id);
+    public ResponseEntity<PlatoDto> updatePlato(@RequestBody CreatePlatoDto platoDto, @PathVariable Long id, @AuthenticationPrincipal UserEntity user){
+        Plato plato = platoService.edit(platoDto, id, user); //Queda registrado el último usuario que modifica un plato
         return ResponseEntity.ok(platoDtoConverter.platoToPlatoDto(plato)) ;
     }
 

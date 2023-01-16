@@ -13,6 +13,8 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, UUID> {
 
     Optional<UserEntity> findFirstByUsername(String username);
 
+    Optional<UserEntity> findFirstByFullNameIgnoreCase(String fullName);
+
     Optional<UserEntity> findFirstByEmail(String email);
 
     List<UserEntity> findByRole(String role);

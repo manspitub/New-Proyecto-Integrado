@@ -30,13 +30,16 @@ public class Plato {
     @ManyToOne
     private UserEntity cookMan;
 
-    @OneToMany(mappedBy = "plato", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "plato", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<DishValoration> valorations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "plato", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany (mappedBy = "plato", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Pedido> pedidos;
+    private List<PedidoPlato> pedidoPlato; //Al borrarse un plato se borrará la asoción pedidoPlato, no es instanciado hasta que sea pedido
+
+    //helpers valoration --------
+
 
     public DishValoration getOneRating(Long id){
         DishValoration dishValoration = new DishValoration();

@@ -25,6 +25,7 @@ public class PlatoService {
                 .description(plato.getDescription())
                 .dintinct(plato.isDistinct())
                 .imageUrl(plato.getImageUrl())
+                .price(plato.getPrice())
                 .build();
         newPlato.setCookMan(user);
 
@@ -47,7 +48,7 @@ public class PlatoService {
         return repository.findAllDistinct(pageable);
     }
 
-    public Plato edit(CreatePlatoDto plato, Long id){
+    public Plato edit(CreatePlatoDto plato, Long id, UserEntity user){
         Optional<Plato> findPlato = repository.findById(id);
 
         if (findPlato.isPresent()){
@@ -61,6 +62,7 @@ public class PlatoService {
                     .price(plato.getPrice())
                     .imageUrl(plato.getImageUrl())
                     .build();
+            foundPlato.setCookMan(user);
 
             return repository.save(foundPlato);
         } else throw null; // excepcion si no se encuentra
