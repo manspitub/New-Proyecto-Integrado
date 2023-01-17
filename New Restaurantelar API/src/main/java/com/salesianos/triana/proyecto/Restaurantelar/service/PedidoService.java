@@ -6,6 +6,7 @@ import com.salesianos.triana.proyecto.Restaurantelar.repositories.*;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.repository.UserEntityRepository;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.role.UserRole;
+import com.salesianos.triana.proyecto.Restaurantelar.security.user.service.UserEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,11 +64,10 @@ public class PedidoService {
 
     public Pedido order(CreatePedidoDto pedidoDto){
 
-        UserEntity user = new UserEntity();
+        UserEntity user;
         List<Payment> payments = new ArrayList<>();
         Worker worker;
         worker = workerRepository.findById(pedidoDto.getIdWaiter()).get();
-        Plato plato = new Plato();
         List<Plato> platosPedido = new ArrayList<>();
 
         for (int i = 0; i <pedidoDto.getIdsPlato().size(); i++) {
@@ -80,40 +80,44 @@ public class PedidoService {
             user = userEntityRepository.findFirstByUsername(pedidoDto.getFullNameClient()).get();
         } else{
 
-            Payment newPayment = Payment.builder()
-                    .payer(user)
-                    .type(pedidoDto.getTypePayment())
-                    .amount(getPriceAmount(pedidoDto))
-                    .build();
 
-            payments.add(newPayment);
-
-            paymentRepository.save(newPayment);
 
 
              user = UserEntity.builder()
+                     .fullName(pedidoDto.getFullNameClient())
                     .username(pedidoDto.getFullNameClient().replace("\\s","")) //Por defecto el usuario se crea eliminando los whitespaces
                     .points(10)
                     .role(UserRole.USER)
-                    .payments(payments)
                      .verified(false)
                      .build();
              userEntityRepository.save(user); //El usuario podrá loguearse pidiendo que le asignen una contraseña
+
+
         }
+
+        Payment newPayment = Payment.builder()
+                .payer(user)
+                .type(pedidoDto.getTypePayment())
+                .amount(getPriceAmount(pedidoDto))
+                .build();
+
+        payments.add(newPayment);
+
+        paymentRepository.save(newPayment);
 
 
 
         Pedido newPedido = Pedido.builder()
                 .type(pedidoDto.getType())
-                .client(user)
-                .type(pedidoDto.getType())
-                .date(LocalDateTime.now())
                 .deliveryMan(worker)
+                .client(user)
+                .date(LocalDateTime.now())
                 .numTable(pedidoDto.getNumMesa())
                 .totalAmount(getPriceAmount(pedidoDto))
                 .build();
 
-        pedidoRepository.save(newPedido);
+        System.out.println(newPedido.getClient().toString());
+
 
         if (pedidoDto.getType() ==1){
             Reservation reservation = Reservation.builder()
@@ -126,13 +130,14 @@ public class PedidoService {
         }
 
         List<PedidoPlato> dishOrders = platosPedido.stream()
-                .map(obj -> new PedidoPlato(platoRepository.findById(obj.getId()).get(), pedidoPlatoRepository.findByPlato(obj).getSum()))
+                .map(obj -> new PedidoPlato(platoRepository.findById(obj.getId()).get(), +1))
                         .collect(Collectors.toList());
 
         dishOrders.stream().forEach(dishOrder -> dishOrder.setPedido(newPedido));
         newPedido.setPedidoPlatos(dishOrders);
 
         return pedidoRepository.save(newPedido);
+
     }
 
     public Page<Pedido> findAll(Pageable pageable){

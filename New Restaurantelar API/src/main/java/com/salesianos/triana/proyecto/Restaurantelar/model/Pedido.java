@@ -57,6 +57,24 @@ public class Pedido {
         return platosPedidos;
     }
 
+    public void addUserAndWorker(UserEntity user, Worker worker){
+        client = user;
+        deliveryMan = worker;
+        if (user.getPedidos() == null) {
+            user.setPedidos(new ArrayList<>());
+            user.getPedidos().add(this);
+        } else {
+            user.getPedidos().add(this);
+        }
+
+        if (worker.getUser().getPedidos() == null) {
+            worker.getUser().setPedidos(new ArrayList<>());
+            worker.getUser().getPedidos().add(this);
+        } else {
+            worker.getUser().getPedidos().add(this);
+        }
+    }
+
 
 
 }

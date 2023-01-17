@@ -28,7 +28,7 @@ public class PedidoDtoConverter {
                 .dishRated(pedido.isDishRated())
                 .completed(pedido.isCompleted())
                 .cancelled(pedido.isCancelled())
-                .usernameWaiter(pedido.getDeliveryMan().getName())
+                .usernameWaiter(pedido.getDeliveryMan().getUser().getFullName())
                 .namePlato(pedido.namePlatosPedido())
                 .paymentAmount(pedido.getTotalAmount())
                 .numTable(pedido.getNumTable())

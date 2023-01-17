@@ -17,4 +17,5 @@ public class WorkerDto {
     private boolean offWork;
     private LocalDateTime timeWorking;
     private String code;
+    private Long idWorker;
 }

@@ -34,6 +34,7 @@ public class UserDtoConverter {
                 .offWork(worker.isOffWork())
                 .timeWorking(worker.getTimeWorking())
                 .code(worker.getCode())
+                .idWorker(worker.getId())
                 .build();
     }
 
