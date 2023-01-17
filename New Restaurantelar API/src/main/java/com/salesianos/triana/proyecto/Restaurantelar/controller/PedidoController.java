@@ -10,6 +10,7 @@ import com.salesianos.triana.proyecto.Restaurantelar.security.user.role.UserRole
 import com.salesianos.triana.proyecto.Restaurantelar.service.PedidoService;
 import com.salesianos.triana.proyecto.Restaurantelar.utils.PaginationLinks;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -35,6 +36,7 @@ public class PedidoController {
 
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_WORKER','ROLE_ADMIN')") //Los pedidos los tomarán los camareros
     public ResponseEntity<PedidoDto> makeOrder(@RequestBody CreatePedidoDto pedidoDto){
         PedidoDto pedido = dtoConverter.convertPedidoDto(pedidoService.order(pedidoDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
@@ -65,10 +67,8 @@ public class PedidoController {
 
     @GetMapping("/{pedidoId}")
     @PreAuthorize("isAuthenticated()")
-    private ResponseEntity<PedidoDto> getPedidoId(@PathVariable Long pedidoId, @AuthenticationPrincipal UserEntity currentUser){
-        Optional<Pedido> pedido = pedidoRepository.findById(pedidoId);
-        if (pedido.isPresent()){
-            Pedido pedidoFound = pedido.get();
+    public ResponseEntity<PedidoDto> getPedidoId(@PathVariable Long pedidoId, @AuthenticationPrincipal UserEntity currentUser){
+        Pedido pedidoFound = pedidoService.find(pedidoId);
             boolean isMine = pedidoFound.getClient().getId() == currentUser.getId();
             boolean isWorker = currentUser.getRole().equals(UserRole.WORKER);
             boolean isAdmin = currentUser.getRole().equals(UserRole.ADMIN);
@@ -77,9 +77,7 @@ public class PedidoController {
             } else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-        } else {
-            return null;
-        }
+
     }
 
     @PostMapping("/completed/{pedidoId}")

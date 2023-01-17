@@ -116,7 +116,6 @@ public class PedidoService {
                 .totalAmount(getPriceAmount(pedidoDto))
                 .build();
 
-        System.out.println(newPedido.getClient().toString());
 
 
         if (pedidoDto.getType() ==1){
@@ -178,71 +177,89 @@ public class PedidoService {
         if (pedidoFound.isPresent()){
             Pedido pedido = pedidoFound.get();
 
-            UserEntity user = new UserEntity();
-            List<Plato> platosPedido = new ArrayList<>();
+            UserEntity user;
             List<Payment> payments = new ArrayList<>();
             Worker worker;
             worker = workerRepository.findById(pedidoDto.getIdWaiter()).get();
-            Plato plato = new Plato();
-            double sum = 0;
+            List<Plato> platosPedido = new ArrayList<>();
 
             for (int i = 0; i <pedidoDto.getIdsPlato().size(); i++) {
                 platosPedido.add(i, platoRepository.findById(pedidoDto.getIdsPlato().get(i)).get());
             }
 
-            for (Plato value : platosPedido) {
-                sum+= value.getPrice();
-            }
+
 
             if(userEntityRepository.findFirstByFullNameIgnoreCase(pedidoDto.getFullNameClient()).isPresent()){
                 user = userEntityRepository.findFirstByUsername(pedidoDto.getFullNameClient()).get();
             } else{
 
-                Payment newPayment = Payment.builder()
-                        .payer(user)
-                        .type(pedidoDto.getTypePayment())
-                        .amount(sum)
-                        .build();
 
-                payments.add(newPayment);
-
-                paymentRepository.save(newPayment);
 
 
                 user = UserEntity.builder()
+                        .fullName(pedidoDto.getFullNameClient())
                         .username(pedidoDto.getFullNameClient().replace("\\s","")) //Por defecto el usuario se crea eliminando los whitespaces
                         .points(10)
                         .role(UserRole.USER)
-                        .payments(payments)
                         .verified(false)
                         .build();
                 userEntityRepository.save(user); //El usuario podrá loguearse pidiendo que le asignen una contraseña
+
+
             }
 
-
-
-             pedido = Pedido.builder()
-                    .type(pedidoDto.getType())
-                    .client(user)
-                    .type(pedidoDto.getType())
-                    .date(LocalDateTime.now())
-                    .deliveryMan(worker)
+            Payment newPayment = Payment.builder()
+                    .payer(user)
+                    .type(pedidoDto.getTypePayment())
+                    .amount(getPriceAmount(pedidoDto))
                     .build();
 
-            pedidoRepository.save(pedido);
+            payments.add(newPayment);
+
+            paymentRepository.save(newPayment);
+
+
+
+            Pedido newPedido = Pedido.builder()
+                    .type(pedidoDto.getType())
+                    .deliveryMan(worker)
+                    .client(user)
+                    .date(LocalDateTime.now())
+                    .numTable(pedidoDto.getNumMesa())
+                    .totalAmount(getPriceAmount(pedidoDto))
+                    .build();
+
+
 
             if (pedidoDto.getType() ==1){
                 Reservation reservation = Reservation.builder()
                         .client(user)
-                        .pedido(pedido)
+                        .pedido(newPedido)
                         .date(pedidoDto.getDateReservation())
                         .numMesa(pedidoDto.getNumMesa())
                         .build();
                 reservationRepository.save(reservation);
             }
-            return pedidoRepository.save(pedido);
+
+            List<PedidoPlato> dishOrders = platosPedido.stream()
+                    .map(obj -> new PedidoPlato(platoRepository.findById(obj.getId()).get(), +1))
+                    .collect(Collectors.toList());
+
+            dishOrders.stream().forEach(dishOrder -> dishOrder.setPedido(newPedido));
+            newPedido.setPedidoPlatos(dishOrders);
+
+            return pedidoRepository.save(newPedido);
         } else throw null;
 
+    }
+
+    public Pedido find(Long id){
+
+        Optional<Pedido> wantedPedido = pedidoRepository.findById(id);
+
+        if (wantedPedido.isPresent()){
+            return pedidoRepository.findById(id).get();
+        } else throw null;
     }
 
 
