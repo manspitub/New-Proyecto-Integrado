@@ -86,6 +86,8 @@ public class PedidoController {
         pedidoService.setCompleted(pedidoId);
     }
 
+
+
    // @PutMapping("/{pedidoId}")
    // public void updatePedido()
 

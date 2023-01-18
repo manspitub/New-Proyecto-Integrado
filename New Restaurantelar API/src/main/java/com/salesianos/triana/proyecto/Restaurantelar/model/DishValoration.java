@@ -13,6 +13,7 @@ import javax.validation.constraints.Max;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "DISHVALORATION")
 public class DishValoration {
 
     @Id
@@ -30,6 +31,8 @@ public class DishValoration {
     private double rating;
 
     private String comments;
+
+    private boolean validate;
 
     public DishValoration(Plato plato, UserEntity user, double rating) {
         this.plato = plato;

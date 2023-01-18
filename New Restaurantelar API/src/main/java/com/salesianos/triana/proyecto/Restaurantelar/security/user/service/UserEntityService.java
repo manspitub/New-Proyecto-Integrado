@@ -1,6 +1,8 @@
 package com.salesianos.triana.proyecto.Restaurantelar.security.user.service;
 
+import com.salesianos.triana.proyecto.Restaurantelar.model.Wage;
 import com.salesianos.triana.proyecto.Restaurantelar.model.Worker;
+import com.salesianos.triana.proyecto.Restaurantelar.repositories.WageRepository;
 import com.salesianos.triana.proyecto.Restaurantelar.repositories.WorkerRepository;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.UserEntity;
 import com.salesianos.triana.proyecto.Restaurantelar.security.user.dto.CreateUserClientDto;
@@ -27,6 +29,7 @@ public class UserEntityService implements UserDetailsService {
     private final UserEntityRepository repository;
 
     private final WorkerRepository workerRepository;
+    private final WageRepository wageRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -59,6 +62,12 @@ public class UserEntityService implements UserDetailsService {
 
     public Worker saveWorker(CreateUserWorkerDto newUser, UserRole role){
 
+        Wage wage = Wage.builder()
+                .amount(newUser.getSalaryAmount())
+                .build();
+
+
+
         UserEntity user = UserEntity.builder()
                 .avatar(newUser.getAvatar())
                 .email(newUser.getEmail())
@@ -66,9 +75,12 @@ public class UserEntityService implements UserDetailsService {
                 .fullName(newUser.getFullName())
                 .password(passwordEncoder.encode(newUser.getCode()))
                 .role(role)
+                .salary(wage)
                 .build();
 
         repository.save(user);
+        wage.setWorker(user);
+        wageRepository.save(wage);
 
         Worker worker = Worker.builder()
                 .code(newUser.getCode())
@@ -78,6 +90,8 @@ public class UserEntityService implements UserDetailsService {
                 .build();
 
         return workerRepository.save(worker);
+
+
 
     } //excepcion si el ya hay un worker con el mismo código registrado
 

@@ -20,6 +20,8 @@ public class Wage {
     @OneToOne
     private UserEntity worker;
 
+    private double amount;
+
 
 
 }

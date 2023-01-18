@@ -18,4 +18,5 @@ public class WorkerDto {
     private LocalDateTime timeWorking;
     private String code;
     private Long idWorker;
+    private double salaryAmount;
 }

@@ -35,5 +35,7 @@ public class CreateUserWorkerDto {
     private boolean offWork;
     private LocalDateTime timeWorking;
 
+    private double salaryAmount;
+
 
 }

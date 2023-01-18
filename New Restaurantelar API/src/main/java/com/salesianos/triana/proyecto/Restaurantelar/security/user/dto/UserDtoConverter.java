@@ -35,6 +35,7 @@ public class UserDtoConverter {
                 .timeWorking(worker.getTimeWorking())
                 .code(worker.getCode())
                 .idWorker(worker.getId())
+                .salaryAmount(worker.getUser().getSalary().getAmount())
                 .build();
     }
 
