@@ -12,5 +12,9 @@
             <p>Role: {{user.role}}</p>
             <h2>Lleva trabajando desde {{getTime()}}</h2>
         </mat-card-content>
+        <a [routerLink]="['/home/usuarios']"
+            >Ver todos los users</a>
+
     </mat-card>
+
 </div>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthLoginDto } from '../models/auth_dto';
 import { AuthLoginResponse } from '../models/interfaces/auth_interface';
+import { UsersResponse } from '../models/interfaces/users_response';
 import { StorageService } from './storage/storage.service';
 
 const AUTH_BASE_URL = 'auth';
@@ -11,6 +12,13 @@ const AUTH_BASE_URL = 'auth';
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
+  }),
+};
+
+const DEFAULT_HEADERS_2 = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   }),
 };
 
@@ -47,6 +55,15 @@ export class AuthService {
     return this.http.get<AuthLoginResponse>(
       requestUrl,
       this.BEARER_AUTHENTICATION
+    )
+  }
+  //añadir lo de rol
+  getUsersByRole(page: number, role: string): Observable<UsersResponse> {
+    let requestUrl = `${environment.apiBaseUrl}/auth/roles/${role}?page=${page}`
+
+    return this.http.get<UsersResponse>(
+      requestUrl,
+      DEFAULT_HEADERS_2
     )
   }
   
