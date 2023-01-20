@@ -51,7 +51,7 @@ public class Pedido {
 
 
         for (PedidoPlato pedidoPlato: this.pedidoPlatos){
-            platosPedidos.add(pedidoPlato.getPlato().getName()+": "+pedidoPlato.getPlato().getPrice());
+            platosPedidos.add(pedidoPlato.getPlato().getName()+": "+pedidoPlato.getPlato().getPrice()+"\n");
         }
         return platosPedidos;
     }
