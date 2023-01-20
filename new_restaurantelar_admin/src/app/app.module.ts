@@ -15,6 +15,8 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PlatosComponent } from './pages/platos/platos.component';
 import { PlatosViewComponent } from './pages/platos-view/platos-view.component';
+import { RegisterPedidosComponent } from './pages/register-pedidos/register-pedidos.component';
+import { PedidosComponent } from './pages/pedidos/pedidos.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { PlatosViewComponent } from './pages/platos-view/platos-view.component';
     UsuariosComponent,
     RegisterComponent,
     PlatosComponent,
-    PlatosViewComponent
+    PlatosViewComponent,
+    RegisterPedidosComponent,
+    PedidosComponent
   ],
   imports: [
     BrowserModule,
