@@ -1,7 +1,7 @@
 
   <!--displayedColumns: string[] = ['name', 'description', 'available', 'actions'];-->
-
-  <h4>Filtrar usuarios por</h4>
+<div>
+    <h4>Filtrar usuarios por</h4>
   <mat-form-field appearance="fill">
     <mat-label>Roles</mat-label>
     <mat-select [(ngModel)] = "roleSelected" (ngModelChange)="getUsers($event)">
@@ -10,6 +10,17 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button style="margin-left: 100px; margin-bottom: 30px;" mat-raised-button color="primary">
+    <div [routerLink]="['/home/register']" class="row" style="align-items: center; ">
+      <h4>  
+        Añadir usuario trabajador
+      </h4>
+
+      <mat-icon class="mat-icon">person_add</mat-icon>
+    </div>
+  </button>
+</div>
+  
 
   <div class="mat-elevation-z8 page">
     <table mat-table [dataSource]="dataSource">

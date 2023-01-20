@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthLoginDto } from '../models/auth_dto';
 import { AuthLoginResponse } from '../models/interfaces/auth_interface';
+import { AuthSignUpDto } from '../models/interfaces/auth_sign_up.dto';
 import { UsersResponse } from '../models/interfaces/users_response';
 import { StorageService } from './storage/storage.service';
 
@@ -47,6 +48,13 @@ export class AuthService {
       DEFAULT_HEADERS
     )
   }
+
+  registerWorker(registerDto: AuthSignUpDto): Observable<AuthLoginResponse>{
+    let requestUrl = `${environment.apiBaseUrl}/${AUTH_BASE_URL}/worker`;
+    return this.http.post<AuthLoginResponse>(requestUrl, registerDto, DEFAULT_HEADERS_2);
+  }
+
+
 
   getMe(): Observable<AuthLoginResponse> {
     let requestUrl = `${environment.apiBaseUrl}/${AUTH_BASE_URL}/me`;
