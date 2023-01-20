@@ -7,5 +7,7 @@ export interface AuthLoginResponse{
     offWork: boolean,
     idWorker: number,
     salaryAmount: number,
+    address: string
     token: string;
+    timeWorking: string
 }

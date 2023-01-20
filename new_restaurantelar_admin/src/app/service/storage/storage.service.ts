@@ -8,11 +8,24 @@ import { environment } from 'src/environments/environment';
 })
 export class StorageService {
 
+
   constructor() { }
 
   setToken(newToken: string) {
     localStorage.setItem('token', newToken);
   }
+
+  getSalary(salary: number){
+    return salary
+  }
+
+  setTime(time: string) {
+    localStorage.setItem('time', time);
+  }
+
+
+  
+
 
   getToken() {
     return localStorage.getItem('token');

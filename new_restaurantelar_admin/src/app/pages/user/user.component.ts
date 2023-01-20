@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthLoginResponse } from 'src/app/models/interfaces/auth_interface';
+import { AuthService } from 'src/app/service/auth.service';
+import { StorageService } from 'src/app/service/storage/storage.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  @Input() user!: AuthLoginResponse
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private storage: StorageService) { }
+
+  getTime(){
+    moment.locale("es")
+    return moment(localStorage.getItem('time'))
   }
+
+  
+  ngOnInit(): void {
+    this.authService.getMe().subscribe((result) => {
+      this.user = result
+    })
+    
+  }
+
+  
 
 }

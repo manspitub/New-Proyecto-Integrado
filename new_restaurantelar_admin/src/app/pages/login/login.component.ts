@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   doLogin(){
     this.authService.login(this.loginDto).subscribe((result) =>{
       this.storage.setToken(result.token);
+      this.storage.setTime(result.timeWorking)
       this.router.navigate(['/home/user'])
     })
   }

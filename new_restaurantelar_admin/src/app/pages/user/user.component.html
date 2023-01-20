@@ -1,85 +1,16 @@
-<div class="text-center fully-centered" *ngIf="loadingProfile">
-	<mat-spinner style="zoom: 0.5;" class="text-center ms-auto me-auto"></mat-spinner>
-</div>
-
-<div class="profile-header" style="margin-top: 64px" >
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-10">
-				<div class="profile-cover-photo centered-bg-image mat-elevation-z5 cursor-pointer" 
-					style="height: 300px; background-image: url('https://img.freepik.com/free-photo/background-blurry-restaurant-shop-interior_1203-4031.jpg')">
-					<div align="end" class="float-end" style="margin-top: 10px; margin-right: 10px" >
-						<button mat-mini-fab color="basic">
-							<mat-icon class="text-secondary">upload</mat-icon>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row justify-content-center">
-			<div class="col-10">
-				<div class=" bg-white position-relative p-5 mat-elevation-z3 rounded-bottom">
-					<div class="profile-picture centered-bg-image d-inline-block border border-5 border-white rounded-3 cursor-pointer mat-elevation-z3 p-0"  
-						style="margin-top: -100px; height: 180px; width: 180px; background-color: white; background-image: url('https://cdn-icons-png.flaticon.com/512/219/219983.png');">
-						<div align="end" class="float-end" style="margin-top: -20px; margin-right: -20px">
-							<button mat-mini-fab color="basic">
-								<mat-icon class="text-secondary">upload</mat-icon>
-							</button>
-						</div>
-					</div>
-
-					
-				</div>
-			</div>
-		</div>
-
-		<div class="row justify-content-center mt-5">
-			<div class="col-4">
-				<div class="profile-sidebar position-sticky bg-white rounded mat-elevation-z3 p-3 mb-5" style="top: 64px;">
-					
-
-					<mat-list>
-						<div >
-							<mat-list-item>
-								<mat-icon class="text-secondary">email</mat-icon>
-								<span class="fw-500 ps-3 small">Email <b>Email</b></span>
-							</mat-list-item>
-						</div>
-
-						<div>
-							<mat-divider></mat-divider>
-
-							<mat-list-item>
-								<mat-icon class="text-secondary">Rol</mat-icon>
-								<span class="fw-500 ps-3 small">Trabaja de<b>Camarero</b></span>
-							</mat-list-item>
-	
-							<mat-divider></mat-divider>
-						</div>
-                        
-                        <div>
-							<mat-divider></mat-divider>
-
-							<mat-list-item>
-								<mat-icon class="text-secondary">Trabajo</mat-icon>
-								<span class="fw-500 ps-3 small">Tiempo trabajado hoy<b>10 horas</b></span>
-							</mat-list-item>
-	
-							<mat-divider></mat-divider>
-						</div>
-
-						
-					</mat-list>
-				</div>
-			</div>
-
-			<div class="col-6 mb-4">
-				<!--<div class="profile-posts"> Poner sus pedidos pendientes
-					<app-post *ngFor="let postResponse of profileUserPostResponses" id="{{'profilePost' + postResponse.post.id}}" [postResponse]="postResponse" [isDetailedPost]="false" (postDeletedEvent)="handlePostDeletedEvent($event)"></app-post>
-				</div>
-            -->
-			</div>
-		</div>
-	</div>
+<div  class="main-div">
+    <mat-card class="card">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <img src="{{user.avatar}}" class="header-image">
+            </div>
+            <mat-card-title>{{user.fullName}}</mat-card-title>
+            <mat-card-subtitle>{{user.username}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Email: {{user.email}}</p>
+            <p>Role: {{user.role}}</p>
+            <h2>Lleva trabajando desde {{getTime()}}</h2>
+        </mat-card-content>
+    </mat-card>
 </div>
