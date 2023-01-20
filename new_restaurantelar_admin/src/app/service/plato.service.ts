@@ -43,4 +43,13 @@ export class PlatoService {
     )
   }
 
+  getPlatosPed():Observable<PlatoResponse> {
+    let requestUrl = `${environment.apiBaseUrl}/plato`
+    
+    return this.http.get<PlatoResponse>(
+      requestUrl,
+      DEFAULT_HEADERS_2
+    )
+  }
+
 }

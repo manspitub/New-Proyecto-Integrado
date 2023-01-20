@@ -1,6 +1,7 @@
 export class CreatePedidoDto {
     
     fullNameClient: string;
+    idWaiter: number;
     type: number;
     idsPlato: number[];
     dateReserva: string;
@@ -12,5 +13,6 @@ export class CreatePedidoDto {
       this.idsPlato = [];
       this.dateReserva = '';
       this.numMesa = 0;
+      this.idWaiter = 0;
     }
   }

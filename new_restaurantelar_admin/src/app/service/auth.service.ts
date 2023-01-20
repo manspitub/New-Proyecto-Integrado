@@ -74,5 +74,14 @@ export class AuthService {
       DEFAULT_HEADERS_2
     )
   }
+
+  getWorkers(): Observable<UsersResponse> {
+    let requestUrl = `${environment.apiBaseUrl}/auth/roles/worker`
+
+    return this.http.get<UsersResponse>(
+      requestUrl,
+      DEFAULT_HEADERS_2
+    )
+  }
   
 }
