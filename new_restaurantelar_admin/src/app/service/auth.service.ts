@@ -13,12 +13,13 @@ const DEFAULT_HEADERS = {
   }),
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, ) { }
 
   login(loginDto: AuthLoginDto): Observable<AuthLoginResponse> {
     let requestUrl = `${environment.apiBaseUrl}/${AUTH_BASE_URL}/login/worker`;
@@ -29,4 +30,5 @@ export class AuthService {
       DEFAULT_HEADERS
     )
   }
+  
 }
