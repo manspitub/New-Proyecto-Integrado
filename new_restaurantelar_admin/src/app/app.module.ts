@@ -13,6 +13,8 @@ import { UserComponent } from './pages/user/user.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { PlatosComponent } from './pages/platos/platos.component';
+import { PlatosViewComponent } from './pages/platos-view/platos-view.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { RegisterComponent } from './pages/register/register.component';
     FooterComponent,
     UserComponent,
     UsuariosComponent,
-    RegisterComponent
+    RegisterComponent,
+    PlatosComponent,
+    PlatosViewComponent
   ],
   imports: [
     BrowserModule,
