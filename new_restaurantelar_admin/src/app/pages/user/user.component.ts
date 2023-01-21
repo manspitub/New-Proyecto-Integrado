@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
 
   getTime(){
     moment.locale("es")
-    return moment(localStorage.getItem('time'))
+    return moment(localStorage.getItem('time')).fromNow()
   }
 
   
