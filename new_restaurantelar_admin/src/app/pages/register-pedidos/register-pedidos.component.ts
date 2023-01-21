@@ -18,18 +18,29 @@ export class RegisterPedidosComponent implements OnInit {
 
   platosList: Plato[] = [];
 
+  workerList: UserDto[] = []
+
   selectedIds = [];
+
+
+  typeValue : 0 | 1 = 0;
+
+  typePaymentValue: 0 | 1 = 0;
+
+  waiterSelected!: string;
 
   
 
 
-  constructor(private router: Router, private authService: AuthService, private platoService: PlatoService, private pedidoService: PedidoService) { }
+  constructor(private userService: AuthService, private router: Router, private authService: AuthService, private platoService: PlatoService, private pedidoService: PedidoService) { }
 
   ngOnInit(): void {
     this.platoService.getPlatosPed().subscribe((result => {
       this.platosList = result.content
       console.log(this.platosList)
     }));
+    this.pedidoDto.type = this.typeValue;
+    this.pedidoDto.typePayment = this.typePaymentValue;
   }
 
   registerPedido(){

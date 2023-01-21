@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PedidosComponent } from './pages/pedidos/pedidos.component';
 import { PlatosViewComponent } from './pages/platos-view/platos-view.component';
 import { PlatosComponent } from './pages/platos/platos.component';
+import { RegisterPedidosComponent } from './pages/register-pedidos/register-pedidos.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserComponent } from './pages/user/user.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
@@ -23,6 +24,8 @@ const routes: Routes = [
     { path: 'registerPlato', component: PlatosComponent},
     { path: 'plato', component: PlatosViewComponent},
     { path: 'pedido', component: PedidosComponent},
+    { path: 'registerPedido', component: RegisterPedidosComponent},
+
   ]}
 ];
 
