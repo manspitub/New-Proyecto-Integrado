@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CreatePlatoDto } from 'src/app/models/create_plato_dto';
 import { Plato } from 'src/app/models/plato_dto';
 import { AuthService } from 'src/app/service/auth.service';
 import { PlatoService } from 'src/app/service/plato.service';
+import { UpdatePlatoComponent } from '../dialog/update-plato/update-plato.component';
 
 @Component({
   selector: 'app-platos-view',
@@ -13,15 +15,16 @@ import { PlatoService } from 'src/app/service/plato.service';
 })
 export class PlatosViewComponent implements OnInit {
 
-  constructor(private authService: AuthService, private platoService: PlatoService) { }
+  constructor(private dialog: MatDialog, private authService: AuthService, private platoService: PlatoService) { }
 
-  
+  platoDto =  new CreatePlatoDto();
+
 
   platos: Plato[] = [];
 
   roleSelected!: string;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'imageUrl', 'price', 'nameCookMan'];
+  displayedColumns: string[] = ['id', 'name', 'description', 'imageUrl', 'price', 'nameCookMan', 'actions'];
 
   dataSource = new MatTableDataSource<Plato>(this.platos);
   
@@ -48,5 +51,24 @@ export class PlatosViewComponent implements OnInit {
       
     })
   }
+
+  onDeletePlato(platoid: number) {
+      
+    this.platoService.deletePlato(platoid)
+    this.getPlatos(5);
+      
+  }
+
+  onEditClicked(id:number){
+     let currentDish = this.platos.find((p) => {return p.id === id})
+
+     this.dialog.open(UpdatePlatoComponent, {
+       width: '500px',
+       disableClose: false,
+       data: {plato: currentDish}
+     })
+  }
+
+
 
 }

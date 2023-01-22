@@ -34,6 +34,12 @@ export class PlatoService {
 
   }
 
+  updatePlato(platoDto: CreatePlatoDto, platoId: number):Observable<PlatoResponse> {
+    let requestUrl = `${environment.apiBaseUrl}/plato/${platoId}`;
+
+    return this.http.put<PlatoResponse>(requestUrl, platoDto, DEFAULT_HEADERS_2)
+  }
+
   getPlatos(page: number):Observable<PlatoResponse> {
     let requestUrl = `${environment.apiBaseUrl}/plato?page=${page}`
     
@@ -50,6 +56,11 @@ export class PlatoService {
       requestUrl,
       DEFAULT_HEADERS_2
     )
+  }
+
+  deletePlato(platoId: number) {
+    let requestUrl = `${environment.apiBaseUrl}/plato/${platoId}`
+    return this.http.delete(requestUrl, DEFAULT_HEADERS_2)
   }
 
 }

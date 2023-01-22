@@ -25,4 +25,6 @@ export class PlatosComponent implements OnInit {
     })
   }
 
+  
+
 }

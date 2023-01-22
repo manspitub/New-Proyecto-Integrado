@@ -68,8 +68,8 @@
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
           <div style="display: flex; width: 40%; justify-content: space-between">
-            <mat-icon>edit</mat-icon>
-            <mat-icon>remove_red_eye</mat-icon>
+            <mat-icon style="color: blue;" (click)="onEditClicked(element.id)">edit</mat-icon>
+            <mat-icon style="color: red;"(click)="onDeletePlato(element.id)">delete</mat-icon>
           </div>
         </td>
       </ng-container>
