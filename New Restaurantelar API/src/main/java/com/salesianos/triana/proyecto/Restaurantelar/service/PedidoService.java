@@ -85,7 +85,7 @@ public class PedidoService {
 
              user = UserEntity.builder()
                      .fullName(pedidoDto.getFullNameClient())
-                    .username(pedidoDto.getFullNameClient().replace("\\s","")) //Por defecto el usuario se crea eliminando los whitespaces
+                    .username(pedidoDto.getFullNameClient().replace(" ","")) //Por defecto el usuario se crea eliminando los whitespaces
                     .points(10)
                     .role(UserRole.USER)
                      .verified(false)
