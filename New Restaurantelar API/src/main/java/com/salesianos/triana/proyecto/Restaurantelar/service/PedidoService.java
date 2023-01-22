@@ -77,7 +77,7 @@ public class PedidoService {
 
 
         if(userEntityRepository.findFirstByFullNameIgnoreCase(pedidoDto.getFullNameClient()).isPresent()){
-            user = userEntityRepository.findFirstByUsername(pedidoDto.getFullNameClient()).get();
+            user = userEntityRepository.findFirstByFullName(pedidoDto.getFullNameClient()).get();
         } else{
 
 
