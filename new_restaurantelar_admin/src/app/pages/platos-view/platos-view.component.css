@@ -1,0 +1,13 @@
+.text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+  
+  }
+  
+  table.mat-table {
+    table-layout: fixed;
+  width: 100%;
+  display: table;
+  }

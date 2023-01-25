@@ -1,0 +1,20 @@
+<mat-toolbar style="display: flex; justify-content: space-around; align-items: center;">
+    <span>Restaurantelar </span> 
+    <img src="../../../assets/restaurantelar_logo.png" height="40">
+    <span class="navbar"></span>
+
+    <div style="width: 300px;display: flex; justify-content: space-between; ">
+        
+        <span><a [routerLink]="['/home/user']"
+            >Mi perfil</a> </span>
+        <span><a [routerLink]="['/home/plato']"
+            >Platos</a></span>
+        <span><a [routerLink]="['/home/pedido']"
+            >Pedidos</a></span>
+            <mat-icon style="color: red; margin-left: 20px;" (click)="doLogOut()">exit_to_app</mat-icon>
+   
+    </div>
+
+  
+  </mat-toolbar>
+

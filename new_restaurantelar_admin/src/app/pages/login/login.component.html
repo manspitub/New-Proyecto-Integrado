@@ -1,0 +1,33 @@
+<div class="page">
+    
+  <div class="welcome">
+    <img style="width: 500px; align-items: center; "
+      src="https://www.bcnrestaurantes.com/img-trans/category/1200-home-estrella.jpg"
+    />
+  </div>
+
+  <div class="card">
+    <h1>Inicie su turno 
+        <mat-icon>verified_user</mat-icon>
+    </h1>
+    
+
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Introduzca su Código</mat-label>
+      <input
+        placeholder="Contraseña"
+        name="password"
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        [(ngModel)]="loginDto.code"
+      />
+      <mat-icon matSuffix (click)="hide = !hide">{{
+        hide ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="doLogin()">
+      Entrar
+    </button>
+  </div>

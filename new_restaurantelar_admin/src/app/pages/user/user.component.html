@@ -1,0 +1,22 @@
+<div  class="main-div">
+    <mat-card class="card">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <img src="{{user.avatar}}" class="header-image">
+            </div>
+            <mat-card-title>{{user.fullName}}</mat-card-title>
+            <mat-card-subtitle>@{{user.username}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Email: {{user.email}}</p>
+            <p>Role: {{user.role}}</p>
+            <h2>Lleva trabajando desde {{getTime()}}</h2>
+        </mat-card-content>
+        <a [routerLink]="['/home/usuarios']"
+            >Ver todos los users</a>
+
+    </mat-card>
+
+    
+
+</div>
