@@ -1,0 +1,24 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Escribe el nombre del plato" [(ngModel)]="platoDto.name" value="plato.name"
+        
+            name="name">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <input matInput placeholder="Escribe la descripción del plato" [(ngModel)]="platoDto.description" name="email">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Imagen Url</mat-label>
+        <input matInput placeholder="Escribe url del plato" type="text" [(ngModel)]="platoDto.imageUrl"
+            name="image">
+    </mat-form-field>
+    
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Precio</mat-label>
+        <input matInput placeholder="Escribe el precio del plato" type="number" [(ngModel)]="platoDto.price"
+            name="price">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="updatePlato()">Registrar</button>
+</form>

@@ -1,0 +1,48 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre completo Cliente</mat-label>
+        <input matInput placeholder="Escribe el nombre completo del cliente" [(ngModel)]="pedidoDto.fullNameClient"
+            name="fullNameClient">
+    </mat-form-field>
+    <section class="example-section">
+        <label class="example-margin">Pago:</label>
+        <mat-radio-group [(ngModel)]="pedidoDto.typePayment">
+            <mat-radio-button class="example-margin" [value]=0>Efectivo</mat-radio-button>
+            <mat-radio-button class="example-margin" [value]=1>Con tarjeta</mat-radio-button>
+        </mat-radio-group>
+      </section>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Número Id trabajador</mat-label>
+        <input matInput placeholder="Escribe el número identificador del trabajador" [(ngModel)]="pedidoDto.idWaiter"
+            name="fullNameClient">
+    </mat-form-field>    
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre Plato</mat-label>
+        <mat-select [(ngModel)]="pedidoDto.idsPlato" multiple name="plato">
+          <mat-option *ngFor="let plato of platosList" [value]="plato.id">
+            {{plato.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      
+
+    
+    
+      <section class="example-section">
+        <label class="example-margin">Tipo de pedido:</label>
+        <mat-radio-group [(ngModel)]="pedidoDto.type">
+            <mat-radio-button class="example-margin" value=0>A MESA</mat-radio-button>
+            <mat-radio-button class="example-margin" value=1>RESERVA</mat-radio-button>
+        </mat-radio-group>
+      </section>
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Numero mesa</mat-label>
+    <input matInput placeholder="Escriba el numero de mesa del pedido" type="number" [(ngModel)]="pedidoDto.numMesa"
+        name="numMesa">
+</mat-form-field>
+  
+    
+    <button mat-raised-button color="primary" (click)="registerPedido()">Registrar</button>
+</form>

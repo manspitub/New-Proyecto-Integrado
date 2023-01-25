@@ -1,0 +1,32 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Escribe tu nombre de usuario" [(ngModel)]="signUpDto.username"
+            name="username">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Escribe tu email" [(ngModel)]="signUpDto.email" name="email">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Avatar</mat-label>
+        <input matInput placeholder="Escribe url del avatar" type="text" [(ngModel)]="signUpDto.avatar"
+            name="avatar">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Código</mat-label>
+        <input matInput placeholder="Escribe tu código" type="password" [(ngModel)]="signUpDto.code"
+            name="password">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Repite código</mat-label>
+        <input matInput placeholder="Escribe tu código otra vez" type="text" [(ngModel)]="signUpDto.code2"
+            name="password">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Salario</mat-label>
+        <input matInput placeholder="Escribe tu salario" type="number" [(ngModel)]="signUpDto.salaryAmount"
+            name="salary">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="doSignUpWorker()">Registrar</button>
+</form>
